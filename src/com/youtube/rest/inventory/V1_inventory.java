@@ -24,13 +24,14 @@ public class V1_inventory {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String returnAlPcParts() throws Exception {
+	public Response returnAlPcParts() throws Exception {
 		
 		System.out.println("Get Inventory");
 		
 		PreparedStatement query = null;
 		Connection conn = null;
 		String returnString  = null;
+		Response rb = null;
 		
 		try {
 			conn = OracleXE.OracleXEConn().getConnection();
@@ -45,6 +46,7 @@ public class V1_inventory {
 			query.close(); //close connection
 			
 			returnString = json.toString();
+			rb = Response.ok(returnString).build();
 						
 		}
 		catch (Exception e) {
@@ -53,7 +55,7 @@ public class V1_inventory {
 		finally {
 			if (conn != null) conn.close();
 		}
-		return returnString;
+		return rb;
 	}
 	
 	
